@@ -695,14 +695,58 @@
         <div class="p-8 pt-6">
 
           <!-- Tab 1: 3D Visualization -->
-          <div data-tab-panel="visual" class="modal-tab-panel">
-            <div class="w-full aspect-video bg-gray-100 rounded-lg overflow-hidden">
-              <img id="modalImg" src="" alt="" class="w-full h-full object-cover" />
-            </div>
-            <p class="mt-4 text-xs text-gray-400">
-              Rendered / photographed view — replace with your own project imagery.
-            </p>
-          </div>
+<div data-tab-panel="visual" class="modal-tab-panel">
+  <div class="w-full aspect-video bg-gray-100 rounded-lg overflow-hidden">
+    <img id="modalImg" src="" alt="" class="w-full h-full object-cover grayscale" />
+  </div>
+  <p class="mt-4 text-xs text-gray-400">
+    Rendered / photographed view — replace with your own project imagery.
+  </p>
+
+  <div class="mt-9 pt-8 border-t border-gray-200">
+    <span class="text-xs font-bold tracking-[0.15em] uppercase text-accent">Proposed Approach</span>
+    <h4 class="mt-1.5 text-lg font-bold">How I'll Build This For You</h4>
+
+    <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-6">
+      <div>
+        <span class="text-2xl font-extrabold text-gray-200">01</span>
+        <h5 class="mt-1 text-sm font-bold">Assess</h5>
+        <p class="mt-1 text-xs text-gray-500 leading-relaxed">
+          Site conditions, soil bearing, and code constraints are evaluated before any design work begins.
+        </p>
+      </div>
+      <div>
+        <span class="text-2xl font-extrabold text-gray-200">02</span>
+        <h5 class="mt-1 text-sm font-bold">Design &amp; Permit</h5>
+        <p class="mt-1 text-xs text-gray-500 leading-relaxed">
+          Structural calculations, drawings, and permit-ready documentation are prepared and submitted.
+        </p>
+      </div>
+      <div>
+        <span class="text-2xl font-extrabold text-gray-200">03</span>
+        <h5 class="mt-1 text-sm font-bold">Build &amp; Oversee</h5>
+        <p class="mt-1 text-xs text-gray-500 leading-relaxed">
+          On-site supervision, inspection, and quality control run through every phase of construction.
+        </p>
+      </div>
+      <div>
+        <span class="text-2xl font-extrabold text-gray-200">04</span>
+        <h5 class="mt-1 text-sm font-bold">Deliver</h5>
+        <p class="mt-1 text-xs text-gray-500 leading-relaxed">
+          Final walkthrough, as-built drawings, and complete documentation are handed over on completion.
+        </p>
+      </div>
+    </div>
+
+    
+      href="#contact"
+      onclick="closeModal();"
+      class="mt-8 inline-flex items-center justify-center px-6 py-3 bg-ink text-white text-xs font-bold uppercase tracking-wide rounded-md hover:bg-accent transition-colors"
+    >
+      Discuss a Project Like This
+    </a>
+  </div>
+</div>
 
           <!-- Tab 2: Cost & Estimation (BOQ) -->
           <div data-tab-panel="cost" class="modal-tab-panel hidden">
