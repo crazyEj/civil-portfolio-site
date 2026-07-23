@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Erick John T. Sibayan | Civil Engineering Solutions</title>
+  <meta name="description" content="Civil Engineering & architectural visualization portfolio." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Manrope', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            ink: '#14161a',
+            accent: '#b5562c',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* ---------- Blueprint build animation ---------- */
+    .blueprint-line {
+      stroke-dasharray: 1;
+      stroke-dashoffset: 1;
+      vector-effect: non-scaling-stroke;
+    }
+
+    .blueprint-fill {
+      opacity: 0;
+      transition: opacity 0.8s ease;
+    }
+
+    .sig-play .l1 {
+      animation: draw 1s ease forwards 0.1s;
+    }
+
+    .sig-play .l2 {
+      animation: draw 0.9s ease forwards 0.7s;
+    }
+
+    .sig-play .l3 {
+      animation: draw 0.9s ease forwards 1.3s;
+    }
+
+    .sig-play .l4 {
+      animation: draw 0.8s ease forwards 1.9s;
+    }
+
+    .sig-play .l5 {
+      animation: draw 0.7s ease forwards 2.4s;
+    }
+
+    .sig-play .fill1 {
+      animation: fadein 0.8s ease forwards 2.8s;
+    }
+
+    .sig-play .fill2 {
+      animation: fadein 0.8s ease forwards 3.1s;
+    }
+
+    @keyframes draw {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes fadein {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .blueprint-line {
+        stroke-dashoffset: 0;
+      }
+
+      .blueprint-fill {
+        opacity: 1;
+      }
+
+      .sig-play * {
+        animation: none !important;
+      }
+    }
+
+    /* Portfolio card overlay */
+    .card-overlay {
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .card-img {
+      transition: transform 0.6s ease, filter 0.5s ease;
+      filter: grayscale(100%);
+    }
+
+    .card:hover .card-img,
+    .card:focus-within .card-img {
+      transform: scale(1.08);
+      filter: grayscale(0%);
+    }
+
+    .card:hover .card-overlay,
+    .card:focus-within .card-overlay {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Mobile menu transition */
+    #mobileMenu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+
+    #mobileMenu.open {
+      max-height: 320px;
+    }
+
+    /* ---------- Modal ---------- */
+    #modalOverlay {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    #modalPanel {
+      opacity: 0;
+      transform: translateY(16px) scale(0.98);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    #projectModal.modal-open #modalOverlay {
+      opacity: 1;
+    }
+
+    #projectModal.modal-open #modalPanel {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    body.modal-locked {
+      overflow: hidden;
+    }
+
+    /* ---------- Split curtain preloader ---------- */
+    body.preloading {
+      overflow: hidden;
+    }
+
+    #preloader {
+      pointer-events: auto;
+    }
+
+    #curtainLeft,
+    #curtainRight {
+      animation-duration: 1.2s;
+      animation-timing-function: cubic-bezier(0.83, 0, 0.17, 1);
+      animation-fill-mode: forwards;
+      animation-delay: 0.7s;
+    }
+
+    #curtainLeft {
+      animation-name: curtainLeftOut;
+    }
+
+    #curtainRight {
+      animation-name: curtainRightOut;
+    }
+
+    #preloaderMark {
+      animation: markFade 0.9s ease forwards;
+    }
+
+    @keyframes curtainLeftOut {
+      to {
+        transform: translateX(-100%);
+      }
+    }
+
+    @keyframes curtainRightOut {
+      to {
+        transform: translateX(100%);
+      }
+    }
+
+    @keyframes markFade {
+      0% {
+        opacity: 0;
+      }
+
+      20% {
+        opacity: 1;
+      }
+
+      75% {
+        opacity: 1;
+      }
+
+      100% {
+        opacity: 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #preloader {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="bg-white text-ink font-sans antialiased">
+
+  <!-- ========== SPLIT CURTAIN PRELOADER ========== -->
+  <div id="preloader" class="fixed inset-0 z-[200] flex overflow-hidden" aria-hidden="true">
+    <div id="curtainLeft" class="w-1/2 h-full bg-ink relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10"
+        style="background-image: linear-gradient(#fbfaf7 1px, transparent 1px), linear-gradient(90deg, #fbfaf7 1px, transparent 1px); background-size: 34px 34px;">
+      </div>
+    </div>
+    <div id="curtainRight" class="w-1/2 h-full relative overflow-hidden" style="background-color:#f5f3ee;">
+      <div class="absolute inset-0 opacity-[0.07]"
+        style="background-image: linear-gradient(#14161a 1px, transparent 1px), linear-gradient(90deg, #14161a 1px, transparent 1px); background-size: 34px 34px;">
+      </div>
+    </div>
+
+    <div id="preloaderMark" class="absolute inset-0 flex items-center justify-center">
+      <span class="text-2xl md:text-3xl font-extrabold tracking-[0.3em] text-white" style="mix-blend-mode: difference;">
+        E · S
+      </span>
+    </div>
+  </div>
+
+  <!-- ========== NAV ========== -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-200">
+    <div class="max-w-7xl mx-auto px-6 md:px-10 h-16 flex items-center justify-between">
+      <a href="#home" class="text-lg font-extrabold tracking-tight">
+        SIBAYAN<span class="text-accent">.</span>CE
+      </a>
+
+      <nav class="hidden md:flex items-center gap-10 text-sm font-semibold">
+        <a href="#home" class="hover:text-accent transition-colors">Home</a>
+        <a href="#about" class="hover:text-accent transition-colors">About</a>
+        <a href="#portfolio" class="hover:text-accent transition-colors">Portfolio</a>
+        <a href="#documentation" class="hover:text-accent transition-colors">Documentation</a>
+        <a href="#contact" class="hover:text-accent transition-colors">Contact</a>
+      </nav>
+
+      <button id="menuBtn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="mobileMenu"
+        class="md:hidden flex flex-col justify-center items-center w-9 h-9 gap-1.5">
+        <span class="block h-0.5 w-6 bg-ink transition-transform" id="bar1"></span>
+        <span class="block h-0.5 w-6 bg-ink transition-opacity" id="bar2"></span>
+        <span class="block h-0.5 w-6 bg-ink transition-transform" id="bar3"></span>
+      </button>
+    </div>
+
+    <div id="mobileMenu" class="md:hidden border-t border-gray-200 bg-white">
+      <nav class="flex flex-col px-6 py-4 gap-4 text-sm font-semibold">
+        <a href="#home" class="mobile-link">Home</a>
+        <a href="#about" class="mobile-link">About</a>
+        <a href="#portfolio" class="mobile-link">Portfolio</a>
+        <a href="#documentation" class="mobile-link">Documentation</a>
+        <a href="#contact" class="mobile-link">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ========== HERO ========== -->
+  <section id="home" class="max-w-7xl mx-auto px-6 md:px-10 py-16 md:py-28 grid md:grid-cols-2 gap-12 items-center">
+    <div>
+      <span class="inline-block text-xs font-bold tracking-[0.2em] uppercase text-accent mb-5">
+        Civil Engineering · Structural Visualization
+      </span>
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05] tracking-tight">
+        Civil Engineering<br />Solutions That Inspire
+      </h1>
+      <p class="mt-6 text-gray-600 text-lg max-w-md leading-relaxed">
+        I turn structural concepts into precise, buildable designs —
+        combining rigorous engineering with clean architectural
+        visualization, from foundation to final render.
+      </p>
+      <div class="mt-10 flex flex-wrap gap-4">
+        <a href="#portfolio"
+          class="inline-flex items-center justify-center px-7 py-3.5 bg-ink text-white text-sm font-bold rounded-md hover:bg-accent transition-colors">
+          View Portfolio
+        </a>
+        <a href="#contact"
+          class="inline-flex items-center justify-center px-7 py-3.5 border-2 border-ink text-ink text-sm font-bold rounded-md hover:bg-ink hover:text-white transition-colors">
+          Get in Touch
+        </a>
+      </div>
+    </div>
+
+    <!-- Professional headshot frame, with a faint blueprint accent behind it -->
+    <div id="heroArt" class="relative flex items-center justify-center py-8 md:py-0">
+
+      <!-- Decorative blueprint accent (faint, sits behind the frame) -->
+      <svg viewBox="0 0 400 400" class="absolute w-[80%] h-[80%] opacity-[0.06] pointer-events-none select-none"
+        fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polygon class="fill1 blueprint-fill" points="90,220 200,120 310,220" fill="#b5562c" fill-opacity="0.4" />
+        <polygon class="fill2 blueprint-fill" points="130,220 130,320 270,320 270,220" fill="#14161a"
+          fill-opacity="0.4" />
+        <path class="l1 blueprint-line" pathLength="1" d="M40,320 L360,320" stroke="#14161a" stroke-width="2"
+          stroke-linecap="round" />
+        <path class="l2 blueprint-line" pathLength="1" d="M130,320 L130,220 M270,220 L270,320" stroke="#14161a"
+          stroke-width="2.5" stroke-linecap="round" />
+        <path class="l3 blueprint-line" pathLength="1" d="M90,220 L200,120 L310,220" stroke="#14161a" stroke-width="2.5"
+          stroke-linecap="round" stroke-linejoin="round" />
+        <path class="l4 blueprint-line" pathLength="1" d="M130,220 L200,120 M270,220 L200,120 M130,270 L270,270"
+          stroke="#b5562c" stroke-width="1.6" stroke-linecap="round" />
+        <path class="l5 blueprint-line" pathLength="1" d="M185,320 L185,265 L215,265 L215,320
+           M150,235 L175,235 L175,258 L150,258 Z
+           M225,235 L250,235 L250,258 L225,258 Z" stroke="#14161a" stroke-width="1.6" stroke-linecap="round"
+          stroke-linejoin="round" />
+      </svg>
+
+      <!-- Elongated arch headshot frame -->
+      <div class="relative z-10">
+        <div class="w-60 sm:w-72 md:w-80 aspect-[3/4] overflow-hidden border-[3px] border-ink shadow-xl bg-gray-100"
+          style="border-radius: 999px 999px 18px 18px;">
+          <!--
+          Placeholder headshot via Unsplash (free-to-use stock photo).
+          Replace this src with your own photo file, e.g. src="/images/headshot.jpg"
+        -->
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80"
+            alt="Professional headshot placeholder — replace with your own photo" class="w-full h-full object-cover" />
+        </div>
+        <div class="hidden md:block absolute -bottom-5 -right-5 w-24 h-24 rounded-full border-2 border-accent"></div>
+        <span
+          class="absolute -bottom-9 left-0 right-0 text-center text-[11px] font-semibold tracking-widest uppercase text-gray-400">
+          Replace with your headshot
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PORTFOLIO GRID ========== -->
+  <section id="portfolio" class="max-w-7xl mx-auto px-6 md:px-10 py-20 md:py-28">
+    <div class="mb-14 max-w-xl">
+      <span class="text-xs font-bold tracking-[0.2em] uppercase text-accent">Selected Work</span>
+      <h2 class="mt-3 text-3xl md:text-4xl font-extrabold tracking-tight">Portfolio</h2>
+      <p class="mt-4 text-gray-600">
+        A sample of structural and visualization projects. Click any card for
+        details — replace these with your own project photos and case studies.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      <!-- Card 1 -->
+      <button type="button" data-project="villa"
+        class="card group relative block text-left w-full rounded-lg overflow-hidden bg-gray-100 aspect-[4/5] focus:outline-none focus:ring-2 focus:ring-accent">
+        <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=900&q=80"
+          alt="Modern Villa" class="card-img absolute inset-0 w-full h-full object-cover" />
+        <div class="card-overlay absolute inset-0 bg-black/55 flex flex-col justify-end p-6">
+          <span class="text-[11px] font-semibold tracking-widest uppercase text-white/70">Residential</span>
+          <h3 class="text-white text-xl font-bold mt-1">Modern Villa</h3>
+          <p class="text-white/80 text-sm mt-1">Structural design & 3D visualization</p>
+        </div>
+      </button>
+
+      <!-- Card 2 -->
+      <button type="button" data-project="office"
+        class="card group relative block text-left w-full rounded-lg overflow-hidden bg-gray-100 aspect-[4/5] focus:outline-none focus:ring-2 focus:ring-accent">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=900&q=80"
+          alt="Office Interior" class="card-img absolute inset-0 w-full h-full object-cover" />
+        <div class="card-overlay absolute inset-0 bg-black/55 flex flex-col justify-end p-6">
+          <span class="text-[11px] font-semibold tracking-widest uppercase text-white/70">Commercial</span>
+          <h3 class="text-white text-xl font-bold mt-1">Office Interior</h3>
+          <p class="text-white/80 text-sm mt-1">Space planning & structural review</p>
+        </div>
+      </button>
+
+      <!-- Card 3 -->
+      <button type="button" data-project="highway"
+        class="card group relative block text-left w-full rounded-lg overflow-hidden bg-gray-100 aspect-[4/5] focus:outline-none focus:ring-2 focus:ring-accent">
+        <img src="assets/highway-overpass-illustration.svg"
+          alt="Highway overpass" class="card-img absolute inset-0 w-full h-full object-cover" />
+        <div class="card-overlay absolute inset-0 bg-black/55 flex flex-col justify-end p-6">
+          <span class="text-[11px] font-semibold tracking-widest uppercase text-white/70">Infrastructure</span>
+          <h3 class="text-white text-xl font-bold mt-1">Highway Overpass</h3>
+          <p class="text-white/80 text-sm mt-1">Resident engineering oversight</p>
+        </div>
+      </button>
+
+      <!-- Card 4 -->
+      <button type="button" data-project="hillside"
+        class="card group relative block text-left w-full rounded-lg overflow-hidden bg-gray-100 aspect-[4/5] focus:outline-none focus:ring-2 focus:ring-accent">
+        <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80"
+          alt="Hillside Residence" class="card-img absolute inset-0 w-full h-full object-cover" />
+        <div class="card-overlay absolute inset-0 bg-black/55 flex flex-col justify-end p-6">
+          <span class="text-[11px] font-semibold tracking-widest uppercase text-white/70">Residential</span>
+          <h3 class="text-white text-xl font-bold mt-1">Hillside Residence</h3>
+          <p class="text-white/80 text-sm mt-1">Foundation & slope stability design</p>
+        </div>
+      </button>
+
+      <!-- Card 5 -->
+      <button type="button" data-project="municipal"
+        class="card group relative block text-left w-full rounded-lg overflow-hidden bg-gray-100 aspect-[4/5] focus:outline-none focus:ring-2 focus:ring-accent">
+        <img src="https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=900&q=80"
+          alt="Municipal Building" class="card-img absolute inset-0 w-full h-full object-cover" />
+        <div class="card-overlay absolute inset-0 bg-black/55 flex flex-col justify-end p-6">
+          <span class="text-[11px] font-semibold tracking-widest uppercase text-white/70">Public Works</span>
+          <h3 class="text-white text-xl font-bold mt-1">Municipal Building</h3>
+          <p class="text-white/80 text-sm mt-1">Compliance & as-built documentation</p>
+        </div>
+      </button>
+
+      <!-- Card 6 -->
+      <button type="button" data-project="condo"
+        class="card group relative block text-left w-full rounded-lg overflow-hidden bg-gray-100 aspect-[4/5] focus:outline-none focus:ring-2 focus:ring-accent">
+        <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=900&q=80"
+          alt="High-Rise Condominium" class="card-img absolute inset-0 w-full h-full object-cover" />
+        <div class="card-overlay absolute inset-0 bg-black/55 flex flex-col justify-end p-6">
+          <span class="text-[11px] font-semibold tracking-widest uppercase text-white/70">Commercial</span>
+          <h3 class="text-white text-xl font-bold mt-1">High-Rise Condominium</h3>
+          <p class="text-white/80 text-sm mt-1">Structural & finishing supervision</p>
+        </div>
+      </button>
+
+    </div>
+  </section>
+
+  <!-- ========== OTHER RELATED WORKS / DOCUMENTATION DASHBOARD ========== -->
+  <section id="documentation" class="relative border-t border-gray-200 overflow-hidden">
+    <div class="absolute inset-0 opacity-[0.035] pointer-events-none"
+      style="background-image: linear-gradient(#14161a 1px, transparent 1px), linear-gradient(90deg, #14161a 1px, transparent 1px); background-size: 36px 36px;">
+    </div>
+
+    <div class="relative max-w-7xl mx-auto px-6 md:px-10 py-20 md:py-28">
+
+      <div class="mb-14 max-w-xl">
+        <span class="text-xs font-bold tracking-[0.2em] uppercase text-accent">Project Controls</span>
+        <h2 class="mt-3 text-3xl md:text-4xl font-extrabold tracking-tight">Other Related Works</h2>
+        <p class="mt-4 text-gray-600">
+          Technical Documentation, Engineering Drafts, and Project Controls
+        </p>
+      </div>
+
+      <!-- Module: Floor Plans & Blueprints -->
+      <div class="border border-gray-200 rounded-lg overflow-hidden bg-white">
+        <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex items-center justify-between flex-wrap gap-2">
+          <h3 class="text-sm font-bold uppercase tracking-wide">Floor Plans &amp; Blueprints</h3>
+          <span class="text-xs text-gray-400">Actual submitted drawings, grouped by project</span>
+        </div>
+        <div id="dashboardDrafts" class="p-6 space-y-10"></div>
+      </div>
+
+      <!-- Module: Cost Estimation & BOQ -->
+      <div class="mt-10 border border-gray-200 rounded-lg overflow-hidden bg-white">
+        <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex items-center justify-between flex-wrap gap-3">
+          <h3 class="text-sm font-bold uppercase tracking-wide">Cost Estimation &amp; BOQ</h3>
+          <label class="flex items-center gap-2 text-xs">
+            <span class="text-gray-400 font-semibold uppercase tracking-wide">Project</span>
+            <select id="dashboardProjectSelect"
+              class="border border-gray-300 rounded-md px-3 py-1.5 text-sm font-semibold bg-white focus:border-ink focus:ring-1 focus:ring-ink outline-none"></select>
+          </label>
+        </div>
+        <div class="p-6">
+          <div class="overflow-x-auto border border-gray-200 rounded-lg">
+            <table class="w-full text-sm">
+              <thead>
+                <tr class="bg-gray-50 border-b border-gray-200 text-left">
+                  <th class="px-4 py-3 font-bold text-xs uppercase tracking-wide text-gray-500">Pay Item</th>
+                  <th class="px-4 py-3 font-bold text-xs uppercase tracking-wide text-gray-500">Unit</th>
+                  <th class="px-4 py-3 font-bold text-xs uppercase tracking-wide text-gray-500 text-right">Orig. Qty
+                  </th>
+                  <th class="px-4 py-3 font-bold text-xs uppercase tracking-wide text-gray-500 text-right">Orig. Amount
+                    (₱)</th>
+                  <th class="px-4 py-3 font-bold text-xs uppercase tracking-wide text-gray-500 text-right">Revised Qty
+                  </th>
+                  <th class="px-4 py-3 font-bold text-xs uppercase tracking-wide text-gray-500 text-right">Revised
+                    Amount (₱)</th>
+                  <th class="px-4 py-3 font-bold text-xs uppercase tracking-wide text-gray-500">Remarks</th>
+                </tr>
+              </thead>
+              <tbody id="dashboardBOQBody" class="divide-y divide-gray-100"></tbody>
+              <tfoot>
+                <tr class="bg-gray-50 border-t-2 border-gray-200">
+                  <td class="px-4 py-3 font-bold text-xs uppercase tracking-wide" colspan="3">Grand Total (Full
+                    Contract)</td>
+                  <td id="dashboardBOQOrigTotal" class="px-4 py-3 font-bold text-right"></td>
+                  <td></td>
+                  <td id="dashboardBOQRevTotal" class="px-4 py-3 font-bold text-right"></td>
+                  <td></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+          <p id="dashboardBOQNote" class="mt-3 text-xs text-gray-400"></p>
+          <div id="dashboardBOQLinks" class="mt-4 flex flex-wrap gap-3"></div>
+        </div>
+      </div>
+
+      <!-- Module: Variation Order Log -->
+      <div class="mt-10 border border-gray-200 rounded-lg overflow-hidden bg-white">
+        <div class="px-6 py-4 border-b border-gray-200 bg-gray-50 flex items-center justify-between flex-wrap gap-2">
+          <h3 class="text-sm font-bold uppercase tracking-wide">Variation Order Log</h3>
+          <span class="text-xs text-gray-400">Scope changes, as filed in Variation Order No. 1</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="bg-gray-50 border-b border-gray-200 text-left">
+                <th class="px-4 py-3 font-bold text-xs uppercase tracking-wide text-gray-500">Project</th>
+                <th class="px-4 py-3 font-bold text-xs uppercase tracking-wide text-gray-500">VO #</th>
+                <th class="px-4 py-3 font-bold text-xs uppercase tracking-wide text-gray-500">Description</th>
+                <th class="px-4 py-3 font-bold text-xs uppercase tracking-wide text-gray-500 text-right">Budget Impact
+                </th>
+                <th class="px-4 py-3 font-bold text-xs uppercase tracking-wide text-gray-500">Remarks</th>
+              </tr>
+            </thead>
+            <tbody id="dashboardVOBody" class="divide-y divide-gray-100"></tbody>
+          </table>
+        </div>
+        <div id="dashboardVONotes" class="px-6 py-4 border-t border-gray-100 space-y-1"></div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ========== ABOUT / MISSION BANNER ========== -->
+  <section id="about" class="bg-ink text-white py-20 md:py-28">
+    <div class="max-w-7xl mx-auto px-6 md:px-10">
+      <div class="max-w-xl mb-16">
+        <span class="text-xs font-bold tracking-[0.2em] uppercase text-accent">Our Mission</span>
+        <h2 class="mt-3 text-3xl md:text-4xl font-extrabold tracking-tight">
+          Built on precision. Designed with intent.
+        </h2>
+      </div>
+
+      <div class="grid md:grid-cols-3 gap-12">
+        <div>
+          <div class="w-10 h-10 flex items-center justify-center rounded-full border border-white/25 mb-5">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <circle cx="12" cy="12" r="9" />
+              <circle cx="12" cy="12" r="4" />
+              <circle cx="12" cy="12" r="0.6" fill="currentColor" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold">Precision</h3>
+          <p class="mt-3 text-white/65 text-sm leading-relaxed">
+            Every calculation, drawing, and site decision is grounded in
+            accuracy — because tolerances in engineering aren't optional.
+          </p>
+        </div>
+        <div>
+          <div class="w-10 h-10 flex items-center justify-center rounded-full border border-white/25 mb-5">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <path
+                d="M12 3v3M12 18v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M3 12h3M18 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold">Creativity</h3>
+          <p class="mt-3 text-white/65 text-sm leading-relaxed">
+            Structural constraints aren't the end of design — they're where
+            thoughtful, buildable creativity actually begins.
+          </p>
+        </div>
+        <div>
+          <div class="w-10 h-10 flex items-center justify-center rounded-full border border-white/25 mb-5">
+            <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+              <circle cx="8" cy="9" r="2.5" />
+              <circle cx="17" cy="9" r="2.5" />
+              <path d="M3.5 19c0-2.8 2-4.5 4.5-4.5S12.5 16.2 12.5 19M12.5 19c0-2.8 2-4.5 4.5-4.5s4.5 1.7 4.5 4.5" />
+            </svg>
+          </div>
+          <h3 class="text-lg font-bold">Collaboration</h3>
+          <p class="mt-3 text-white/65 text-sm leading-relaxed">
+            Great infrastructure comes from tight coordination — contractors,
+            LGUs, and district offices working from the same source of truth.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CONTACT ========== -->
+  <section id="contact" class="max-w-2xl mx-auto px-6 md:px-10 py-20 md:py-28">
+    <div class="text-center mb-12">
+      <span class="text-xs font-bold tracking-[0.2em] uppercase text-accent">Get In Touch</span>
+      <h2 class="mt-3 text-3xl md:text-4xl font-extrabold tracking-tight">Let's Talk About Your Project</h2>
+      <p class="mt-4 text-gray-600">
+        Open to conversations on infrastructure delivery, construction
+        management, and visualization work.
+      </p>
+    </div>
+
+    <form class="space-y-5"
+      onsubmit="event.preventDefault(); alert('This is a template — connect this form to a service like Formspree or your own backend to receive messages.');">
+      <div>
+        <label for="name" class="block text-sm font-semibold mb-2">Name</label>
+        <input id="name" name="name" type="text" required
+          class="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-ink focus:ring-1 focus:ring-ink outline-none transition-colors" />
+      </div>
+      <div>
+        <label for="email" class="block text-sm font-semibold mb-2">Email</label>
+        <input id="email" name="email" type="email" required
+          class="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-ink focus:ring-1 focus:ring-ink outline-none transition-colors" />
+      </div>
+      <div>
+        <label for="message" class="block text-sm font-semibold mb-2">Message</label>
+        <textarea id="message" name="message" rows="5" required
+          class="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-ink focus:ring-1 focus:ring-ink outline-none transition-colors resize-none"></textarea>
+      </div>
+      <button type="submit"
+        class="w-full py-3.5 bg-ink text-white text-sm font-bold rounded-md hover:bg-accent transition-colors">
+        Send Message
+      </button>
+    </form>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="border-t border-gray-200 py-10">
+    <div class="max-w-7xl mx-auto px-6 md:px-10 flex flex-col md:flex-row items-center justify-between gap-6">
+      <p class="text-sm text-gray-500">© 2026 Erick John T. Sibayan. All rights reserved.</p>
+
+      <div class="flex items-center gap-5">
+        <a href="#" aria-label="LinkedIn" class="text-gray-500 hover:text-ink transition-colors">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+            <path
+              d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.11 1 2.48 1s2.5 1.12 2.5 2.5zM.24 8.5h4.5V23H.24V8.5zM8.5 8.5h4.3v1.98h.06c.6-1.13 2.06-2.32 4.24-2.32 4.53 0 5.37 2.98 5.37 6.85V23h-4.5v-6.98c0-1.66-.03-3.8-2.32-3.8-2.32 0-2.68 1.81-2.68 3.68V23H8.5V8.5z" />
+          </svg>
+        </a>
+        <a href="#" aria-label="Email" class="text-gray-500 hover:text-ink transition-colors">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <rect x="2" y="4" width="20" height="16" rx="2" />
+            <path d="m4 6 8 7 8-7" />
+          </svg>
+        </a>
+        <a href="#" aria-label="Phone" class="text-gray-500 hover:text-ink transition-colors">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path
+              d="M3 5c0-1.1.9-2 2-2h2.2c.5 0 1 .4 1.1.9l.9 3.6c.1.5-.1 1-.5 1.3l-1.6 1.2a12.5 12.5 0 0 0 6.9 6.9l1.2-1.6c.3-.4.8-.6 1.3-.5l3.6.9c.5.1.9.6.9 1.1V19c0 1.1-.9 2-2 2h-1C10.9 21 3 13.1 3 4V5z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== PROJECT DETAIL MODAL ========== -->
+  <div id="projectModal" class="fixed inset-0 z-[100] hidden">
+    <div id="modalOverlay" class="absolute inset-0 bg-black/70 backdrop-blur-sm"></div>
+
+    <div class="relative z-10 flex items-center justify-center min-h-screen p-4">
+      <div id="modalPanel"
+        class="relative bg-white rounded-xl max-w-4xl w-full max-h-[92vh] overflow-y-auto shadow-2xl">
+        <button id="modalClose" type="button" aria-label="Close project details"
+          class="absolute top-4 right-4 z-20 w-9 h-9 flex items-center justify-center rounded-full bg-white/90 border border-gray-200 hover:bg-ink hover:text-white hover:border-ink transition-colors">
+          ✕
+        </button>
+
+        <!-- Header: category, title, overview — always visible above the tabs -->
+        <div class="p-8 pb-0">
+          <span id="modalCategory" class="text-xs font-bold tracking-[0.2em] uppercase text-accent"></span>
+          <h3 id="modalTitle" class="mt-2 text-2xl md:text-3xl font-extrabold tracking-tight"></h3>
+          <p id="modalOverview" class="mt-4 text-gray-600 leading-relaxed max-w-2xl"></p>
+
+          <div class="mt-6">
+            <span class="text-xs font-bold tracking-[0.15em] uppercase text-gray-400">Tools &amp; Software Used</span>
+            <div id="modalTools" class="mt-3 flex flex-wrap gap-2"></div>
+          </div>
+        </div>
+
+        <!-- Tab navigation -->
+        <div class="mt-8 px-8 border-b border-gray-200 flex gap-2 overflow-x-auto" role="tablist"
+          aria-label="Project detail sections">
+          <button type="button" data-tab="visual" role="tab" aria-selected="true"
+            class="modal-tab-btn whitespace-nowrap px-4 py-3 text-sm font-bold border-b-2 border-ink text-ink">
+            3D Visualization
+          </button>
+          <button type="button" data-tab="cost" role="tab" aria-selected="false"
+            class="modal-tab-btn whitespace-nowrap px-4 py-3 text-sm font-bold border-b-2 border-transparent text-gray-400 hover:text-ink transition-colors">
+            Cost &amp; Estimation
+          </button>
+          <button type="button" data-tab="drafts" role="tab" aria-selected="false"
+            class="modal-tab-btn whitespace-nowrap px-4 py-3 text-sm font-bold border-b-2 border-transparent text-gray-400 hover:text-ink transition-colors">
+            Engineering Drafts &amp; VOs
+          </button>
+        </div>
+
+        <!-- Tab panels -->
+        <div class="p-8 pt-6">
+
+          <!-- Tab 1: 3D Visualization -->
+          <div data-tab-panel="visual" class="modal-tab-panel">
+            <div class="w-full aspect-video bg-gray-100 rounded-lg overflow-hidden">
+              <img id="modalImg" src="" alt="" class="w-full h-full object-cover grayscale" />
+            </div>
+            <p class="mt-4 text-xs text-gray-400">
+              Rendered / photographed view — replace with your own project imagery.
+            </p>
+
+            <div class="mt-9 pt-8 border-t border-gray-200">
+              <span class="text-xs font-bold tracking-[0.15em] uppercase text-accent">Proposed Approach</span>
+              <h4 class="mt-1.5 text-lg font-bold">How I'll Build This For You</h4>
+
+              <div class="mt-6 grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div>
+                  <span class="text-2xl font-extrabold text-gray-200">01</span>
+                  <h5 class="mt-1 text-sm font-bold">Assess</h5>
+                  <p class="mt-1 text-xs text-gray-500 leading-relaxed">
+                    Site conditions, soil bearing, and code constraints are evaluated before any design work begins.
+                  </p>
+                </div>
+                <div>
+                  <span class="text-2xl font-extrabold text-gray-200">02</span>
+                  <h5 class="mt-1 text-sm font-bold">Design &amp; Permit</h5>
+                  <p class="mt-1 text-xs text-gray-500 leading-relaxed">
+                    Structural calculations, drawings, and permit-ready documentation are prepared and submitted.
+                  </p>
+                </div>
+                <div>
+                  <span class="text-2xl font-extrabold text-gray-200">03</span>
+                  <h5 class="mt-1 text-sm font-bold">Build &amp; Oversee</h5>
+                  <p class="mt-1 text-xs text-gray-500 leading-relaxed">
+                    On-site supervision, inspection, and quality control run through every phase of construction.
+                  </p>
+                </div>
+                <div>
+                  <span class="text-2xl font-extrabold text-gray-200">04</span>
+                  <h5 class="mt-1 text-sm font-bold">Deliver</h5>
+                  <p class="mt-1 text-xs text-gray-500 leading-relaxed">
+                    Final walkthrough, as-built drawings, and complete documentation are handed over on completion.
+                  </p>
+                </div>
+              </div>
+
+              <a href="#contact" onclick="closeModal();"
+                class="mt-8 inline-flex items-center justify-center px-6 py-3 bg-ink text-white text-xs font-bold uppercase tracking-wide rounded-md hover:bg-accent transition-colors">
+                Discuss a Project Like This
+              </a>
+            </div>
+          </div>
+
+          <!-- Tab 2: Cost & Estimation (BOQ) -->
+          <div data-tab-panel="cost" class="modal-tab-panel hidden">
+            <span class="text-xs font-bold tracking-[0.15em] uppercase text-gray-400">
+              Bill of Quantities — Sample Estimate
+            </span>
+            <div class="mt-3 overflow-x-auto border border-gray-200 rounded-lg">
+              <table class="w-full text-sm">
+                <thead>
+                  <tr class="bg-gray-50 border-b border-gray-200 text-left">
+                    <th class="px-4 py-3 font-bold text-xs uppercase tracking-wide text-gray-500">Item</th>
+                    <th class="px-4 py-3 font-bold text-xs uppercase tracking-wide text-gray-500 text-right">Qty</th>
+                    <th class="px-4 py-3 font-bold text-xs uppercase tracking-wide text-gray-500">Unit</th>
+                    <th class="px-4 py-3 font-bold text-xs uppercase tracking-wide text-gray-500 text-right">Unit Cost
+                      (₱)</th>
+                    <th class="px-4 py-3 font-bold text-xs uppercase tracking-wide text-gray-500 text-right">Total (₱)
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="modalBOQBody" class="divide-y divide-gray-100"></tbody>
+                <tfoot>
+                  <tr class="bg-gray-50 border-t-2 border-gray-200">
+                    <td class="px-4 py-3 font-bold text-xs uppercase tracking-wide" colspan="4">Grand Total</td>
+                    <td id="modalBOQTotal" class="px-4 py-3 font-bold text-right"></td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+            <p class="mt-3 text-xs text-gray-400">
+              Sample figures for illustration — replace with real estimate data per project.
+            </p>
+          </div>
+
+          <!-- Tab 3: Engineering Drafts & Variation Orders -->
+          <div data-tab-panel="drafts" class="modal-tab-panel hidden">
+
+            <span class="text-xs font-bold tracking-[0.15em] uppercase text-gray-400">Technical Drafts</span>
+            <div id="modalDrafts" class="mt-3 grid sm:grid-cols-2 gap-4"></div>
+
+            <div class="mt-9">
+              <span class="text-xs font-bold tracking-[0.15em] uppercase text-gray-400">Variation Order Log</span>
+              <div class="mt-3 border border-gray-200 rounded-lg divide-y divide-gray-100" id="modalVOLog"></div>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ---------- Split curtain preloader ----------
+    (function () {
+      const preloader = document.getElementById('preloader');
+      if (!preloader) return;
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      if (prefersReducedMotion) {
+        preloader.style.display = 'none';
+        return;
+      }
+
+      document.body.classList.add('preloading');
+
+      let finished = false;
+      const finishPreload = () => {
+        if (finished) return;
+        finished = true;
+        preloader.style.display = 'none';
+        preloader.classList.add('pointer-events-none');
+        document.body.classList.remove('preloading');
+      };
+
+      const curtainRight = document.getElementById('curtainRight');
+      curtainRight.addEventListener('animationend', (e) => {
+        if (e.animationName === 'curtainRightOut') {
+          finishPreload();
+        }
+      });
+
+      // Safety fallback in case animationend doesn't fire for any reason
+      setTimeout(finishPreload, 2200);
+    })();
+
+    // ---------- Hamburger menu toggle ----------
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const bar1 = document.getElementById('bar1');
+    const bar2 = document.getElementById('bar2');
+    const bar3 = document.getElementById('bar3');
+
+    menuBtn.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      bar1.style.transform = isOpen ? 'translateY(6px) rotate(45deg)' : '';
+      bar2.style.opacity = isOpen ? '0' : '1';
+      bar3.style.transform = isOpen ? 'translateY(-6px) rotate(-45deg)' : '';
+    });
+
+    document.querySelectorAll('.mobile-link').forEach((link) => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        menuBtn.setAttribute('aria-expanded', 'false');
+        bar1.style.transform = '';
+        bar2.style.opacity = '1';
+        bar3.style.transform = '';
+      });
+    });
+
+    // ---------- Scroll/load-triggered blueprint "build" animation ----------
+    const heroArt = document.getElementById('heroArt');
+    const playAnimation = () => {
+      heroArt.classList.add('sig-play');
+    };
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              playAnimation();
+              observer.disconnect();
+            }
+          });
+        },
+        { threshold: 0.3 }
+      );
+      observer.observe(heroArt);
+    } else {
+      playAnimation();
+    }
+
+    // ---------- Project detail modal ----------
+    // Replace "image" with your own project photo/blueprint scan path once you have one,
+    // e.g. "/images/projects/villa.jpg"
+    const PROJECTS = {
+      villa: {
+        category: 'Residential',
+        title: 'Modern Villa',
+        image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1200&q=80',
+        overview:
+          'Full structural design and 3D visualization for a single-family residence, covering foundation sizing, load-bearing layout, and coordinated architectural-structural drawings from concept through construction documents.',
+        tools: ['AutoCAD', 'Civil 3D', 'SketchUp Pro', 'Bluebeam'],
+        boq: [
+          { item: 'Earthworks (Excavation & Backfill)', qty: 180, unit: 'm³', unitCost: 850 },
+          { item: 'Structural Concrete, Class A', qty: 95, unit: 'm³', unitCost: 6200 },
+          { item: 'Reinforcement Steel, Grade 40', qty: 6800, unit: 'kg', unitCost: 78 },
+          { item: 'Formworks', qty: 420, unit: 'm²', unitCost: 620 },
+          { item: 'CHB Masonry & Plastering', qty: 310, unit: 'm²', unitCost: 540 },
+        ],
+        drafts: [
+          { label: 'Ground Floor Plan', type: 'plan' },
+          { label: 'Foundation Layout', type: 'foundation' },
+          { label: 'Roof Framing Plan', type: 'framing' },
+          { label: 'Front Elevation', type: 'elevation' },
+        ],
+        voLog: [
+          { vo: 'VO #01', description: 'Foundation depth adjustment due to low soil bearing capacity', impact: '+4.5%', status: 'Approved', date: 'Feb 2023' },
+          { vo: 'VO #02', description: 'Upgrade of roof insulation specification per client request', impact: '+1.2%', status: 'Approved', date: 'May 2023' },
+        ],
+      },
+      office: {
+        category: 'Commercial',
+        title: 'Office Interior',
+        image: 'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80',
+        overview:
+          'Space planning and structural review for a commercial office fit-out, ensuring proposed partition and mezzanine layouts complied with existing structural capacity and life-safety requirements.',
+        tools: ['Revit', 'AutoCAD', 'Bluebeam'],
+        boq: [
+          { item: 'Demolition & Site Clearing', qty: 260, unit: 'm²', unitCost: 320 },
+          { item: 'Structural Steel Framing (Mezzanine)', qty: 4200, unit: 'kg', unitCost: 96 },
+          { item: 'Partition Walls, Gypsum Board', qty: 380, unit: 'm²', unitCost: 780 },
+          { item: 'Flooring, Raised Access Floor', qty: 260, unit: 'm²', unitCost: 1450 },
+        ],
+        drafts: [
+          { label: 'Space Planning Layout', type: 'plan' },
+          { label: 'Mezzanine Framing Plan', type: 'framing' },
+          { label: 'Reflected Ceiling Plan', type: 'plan' },
+        ],
+        voLog: [
+          { vo: 'VO #01', description: 'Additional mezzanine bracing required after load re-check', impact: '+3.1%', status: 'Approved', date: 'Sep 2022' },
+        ],
+      },
+      highway: {
+        category: 'Infrastructure',
+        title: 'Highway Overpass',
+        image: 'assets/highway-overpass-illustration.svg',
+        overview:
+          'Resident engineering oversight for a public highway overpass project — validating programs of works, monitoring structural pour schedules, and preparing as-built documentation for District Office approval.',
+        tools: ['AutoCAD', 'Civil 3D', 'STAAD.Pro', 'Bill of Quantities (BOQ)'],
+        boq: [
+          { item: 'Earthworks (Cut & Fill)', qty: 5200, unit: 'm³', unitCost: 610 },
+          { item: 'Pile Foundation, Bored Pile', qty: 48, unit: 'pcs', unitCost: 68000 },
+          { item: 'Structural Concrete, Class A', qty: 860, unit: 'm³', unitCost: 6450 },
+          { item: 'Reinforcement Steel, Grade 60', qty: 92000, unit: 'kg', unitCost: 82 },
+          { item: 'Asphalt Overlay', qty: 3100, unit: 'm²', unitCost: 980 },
+        ],
+        drafts: [
+          { label: 'Pier & Abutment Layout', type: 'foundation' },
+          { label: 'Girder Framing Plan', type: 'framing' },
+          { label: 'Longitudinal Section', type: 'elevation' },
+          { label: 'Typical Cross-Section', type: 'plan' },
+        ],
+        voLog: [
+          { vo: 'VO #01', description: 'Foundation depth adjustment due to low soil bearing capacity', impact: '+4.5%', status: 'Approved', date: 'Jan 2024' },
+          { vo: 'VO #02', description: 'Realignment of drainage box culvert to avoid utility conflict', impact: '+2.0%', status: 'Approved', date: 'Apr 2024' },
+          { vo: 'VO #03', description: 'Additional traffic management provisions for phased closure', impact: '+1.4%', status: 'Under Review', date: 'Jun 2024' },
+        ],
+      },
+      hillside: {
+        category: 'Residential',
+        title: 'Hillside Residence',
+        image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
+        overview:
+          'Foundation and slope-stability design for a residence built into sloped terrain, including retaining structure sizing and drainage coordination to manage lateral earth pressure.',
+        tools: ['AutoCAD', 'Civil 3D', 'ETABS'],
+        boq: [
+          { item: 'Earthworks (Slope Cutting)', qty: 640, unit: 'm³', unitCost: 780 },
+          { item: 'Retaining Wall, Reinforced Concrete', qty: 140, unit: 'm³', unitCost: 7100 },
+          { item: 'Reinforcement Steel, Grade 40', qty: 9200, unit: 'kg', unitCost: 79 },
+          { item: 'Subsurface Drainage System', qty: 210, unit: 'm', unitCost: 1250 },
+        ],
+        drafts: [
+          { label: 'Foundation & Retaining Wall Plan', type: 'foundation' },
+          { label: 'Slope Drainage Layout', type: 'plan' },
+          { label: 'Cross-Section — Retaining Wall', type: 'elevation' },
+        ],
+        voLog: [
+          { vo: 'VO #01', description: 'Retaining wall depth increased following geotechnical re-survey', impact: '+5.8%', status: 'Approved', date: 'Nov 2022' },
+        ],
+      },
+      municipal: {
+        category: 'Public Works',
+        title: 'Municipal Building',
+        image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&w=1200&q=80',
+        overview:
+          'Compliance monitoring and as-built documentation for a municipal government building, ensuring procurement and infrastructure regulations were met throughout construction.',
+        tools: ['AutoCAD', 'PlanSwift', 'Bluebeam'],
+        boq: [
+          { item: 'Earthworks & Site Preparation', qty: 980, unit: 'm³', unitCost: 590 },
+          { item: 'Structural Concrete, Class A', qty: 410, unit: 'm³', unitCost: 6300 },
+          { item: 'Reinforcement Steel, Grade 40', qty: 38000, unit: 'kg', unitCost: 78 },
+          { item: 'Roofing, Metal Truss & Sheeting', qty: 620, unit: 'm²', unitCost: 2150 },
+        ],
+        drafts: [
+          { label: 'Ground Floor Plan', type: 'plan' },
+          { label: 'Roof Truss Layout', type: 'framing' },
+          { label: 'Foundation Detail', type: 'foundation' },
+        ],
+        voLog: [
+          { vo: 'VO #01', description: 'Additional accessibility ramp per compliance review', impact: '+1.8%', status: 'Approved', date: 'Mar 2025' },
+          { vo: 'VO #02', description: 'Roof truss upgrade for wind load compliance', impact: '+2.6%', status: 'Approved', date: 'Jul 2025' },
+        ],
+      },
+      condo: {
+        category: 'Commercial',
+        title: 'High-Rise Condominium',
+        image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80',
+        overview:
+          'Structural and finishing supervision across all phases of a multi-million-peso high-rise condominium build, with daily accomplishment reporting and systematic QA/safety inspection.',
+        tools: ['AutoCAD', 'Revit', 'ETABS', 'PlanSwift'],
+        boq: [
+          { item: 'Earthworks & Excavation', qty: 8600, unit: 'm³', unitCost: 640 },
+          { item: 'Pile Foundation, Bored Pile', qty: 86, unit: 'pcs', unitCost: 74000 },
+          { item: 'Structural Concrete, Class A', qty: 2400, unit: 'm³', unitCost: 6550 },
+          { item: 'Reinforcement Steel, Grade 60', qty: 310000, unit: 'kg', unitCost: 83 },
+          { item: 'Curtain Wall Cladding', qty: 4800, unit: 'm²', unitCost: 8900 },
+        ],
+        drafts: [
+          { label: 'Typical Floor Plan', type: 'plan' },
+          { label: 'Column & Beam Framing Plan', type: 'framing' },
+          { label: 'Foundation & Pile Layout', type: 'foundation' },
+          { label: 'Building Elevation', type: 'elevation' },
+        ],
+        voLog: [
+          { vo: 'VO #01', description: 'Column relocation on Level 3 to accommodate revised unit layout', impact: '+2.3%', status: 'Approved', date: 'Aug 2022' },
+          { vo: 'VO #02', description: 'Curtain wall spec upgrade for typhoon wind loading', impact: '+3.7%', status: 'Approved', date: 'Feb 2023' },
+          { vo: 'VO #03', description: 'Additional fire-rated partitions per updated code review', impact: '+1.1%', status: 'Approved', date: 'Oct 2023' },
+        ],
+      },
+    };
+
+    // Small inline line-art icon set for "Technical Drafts" placeholders
+    const DRAFT_ICONS = {
+      plan: '<rect x="10" y="10" width="80" height="60" stroke="currentColor" stroke-width="2" fill="none"/><line x1="50" y1="10" x2="50" y2="45" stroke="currentColor" stroke-width="1.4"/><line x1="10" y1="45" x2="90" y2="45" stroke="currentColor" stroke-width="1.4"/>',
+      foundation: '<rect x="14" y="30" width="72" height="14" stroke="currentColor" stroke-width="2" fill="none"/><line x1="24" y1="44" x2="24" y2="66" stroke="currentColor" stroke-width="2"/><line x1="50" y1="44" x2="50" y2="66" stroke="currentColor" stroke-width="2"/><line x1="76" y1="44" x2="76" y2="66" stroke="currentColor" stroke-width="2"/><line x1="14" y1="66" x2="86" y2="66" stroke="currentColor" stroke-width="1.4"/>',
+      framing: '<line x1="14" y1="70" x2="14" y2="20" stroke="currentColor" stroke-width="2"/><line x1="86" y1="70" x2="86" y2="20" stroke="currentColor" stroke-width="2"/><line x1="14" y1="20" x2="86" y2="20" stroke="currentColor" stroke-width="2"/><line x1="14" y1="70" x2="50" y2="35" stroke="currentColor" stroke-width="1.3"/><line x1="86" y1="70" x2="50" y2="35" stroke="currentColor" stroke-width="1.3"/>',
+      elevation: '<path d="M14,70 L34,70 L34,40 L50,22 L66,40 L66,70 L86,70" stroke="currentColor" stroke-width="2" fill="none" stroke-linejoin="round"/><line x1="10" y1="70" x2="90" y2="70" stroke="currentColor" stroke-width="1.2"/>',
+    };
+
+    const projectModal = document.getElementById('projectModal');
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalPanel = document.getElementById('modalPanel');
+    const modalClose = document.getElementById('modalClose');
+    const modalImg = document.getElementById('modalImg');
+    const modalCategory = document.getElementById('modalCategory');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalOverview = document.getElementById('modalOverview');
+    const modalTools = document.getElementById('modalTools');
+    const modalBOQBody = document.getElementById('modalBOQBody');
+    const modalBOQTotal = document.getElementById('modalBOQTotal');
+    const modalDrafts = document.getElementById('modalDrafts');
+    const modalVOLog = document.getElementById('modalVOLog');
+
+    const peso = (n) => '₱' + Math.round(n).toLocaleString('en-PH');
+
+    function renderBOQ(boq, tbodyEl, totalEl) {
+      tbodyEl.innerHTML = '';
+      let grandTotal = 0;
+
+      boq.forEach((row) => {
+        const total = row.qty * row.unitCost;
+        grandTotal += total;
+
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+        <td class="px-4 py-3">${row.item}</td>
+        <td class="px-4 py-3 text-right">${row.qty.toLocaleString('en-PH')}</td>
+        <td class="px-4 py-3 text-gray-500">${row.unit}</td>
+        <td class="px-4 py-3 text-right">${peso(row.unitCost)}</td>
+        <td class="px-4 py-3 text-right font-semibold">${peso(total)}</td>
+      `;
+        tbodyEl.appendChild(tr);
+      });
+
+      totalEl.textContent = peso(grandTotal);
+    }
+
+    function renderDrafts(drafts, containerEl, projectLabel) {
+      containerEl.innerHTML = '';
+      drafts.forEach((draft) => {
+        const card = document.createElement('div');
+        card.className = 'border border-gray-200 rounded-lg p-4 flex flex-col items-center text-center bg-gray-50';
+        card.innerHTML = `
+        <svg viewBox="0 0 100 80" class="w-full h-20 text-ink" fill="none" xmlns="http://www.w3.org/2000/svg">
+          ${DRAFT_ICONS[draft.type] || DRAFT_ICONS.plan}
+        </svg>
+        <span class="mt-3 text-sm font-semibold">${draft.label}</span>
+        ${projectLabel ? `<span class="text-xs text-gray-400 mt-0.5">${projectLabel}</span>` : ''}
+        <a href="#" onclick="event.preventDefault();" class="mt-1.5 text-xs font-semibold text-accent hover:underline">
+          View Full Drawing
+        </a>
+      `;
+        containerEl.appendChild(card);
+      });
+    }
+
+    function renderVOLog(voLog, containerEl, showProjectColumn) {
+      containerEl.innerHTML = '';
+      voLog.forEach((vo) => {
+        const statusClass =
+          vo.status === 'Approved'
+            ? 'bg-green-50 text-green-700 border-green-200'
+            : 'bg-amber-50 text-amber-700 border-amber-200';
+
+        if (showProjectColumn) {
+          // Table row variant, used by the site-wide dashboard log
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+          <td class="px-4 py-3 font-semibold">${vo.project}</td>
+          <td class="px-4 py-3 text-xs font-bold text-ink">${vo.vo}</td>
+          <td class="px-4 py-3 text-gray-600">${vo.description}</td>
+          <td class="px-4 py-3 text-right font-semibold text-accent">${vo.impact}</td>
+          <td class="px-4 py-3"><span class="text-[11px] font-semibold px-2.5 py-1 rounded-full border ${statusClass}">${vo.status}</span></td>
+          <td class="px-4 py-3 text-xs text-gray-400">${vo.date}</td>
+        `;
+          containerEl.appendChild(tr);
+        } else {
+          // Compact card-row variant, used inside the project modal
+          const row = document.createElement('div');
+          row.className = 'p-4 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4';
+          row.innerHTML = `
+          <span class="text-xs font-bold tracking-wide text-ink shrink-0 w-16">${vo.vo}</span>
+          <p class="flex-1 text-sm text-gray-600">${vo.description}</p>
+          <span class="text-sm font-semibold text-accent shrink-0">${vo.impact} budget</span>
+          <span class="text-[11px] font-semibold px-2.5 py-1 rounded-full border ${statusClass} shrink-0">${vo.status}</span>
+          <span class="text-xs text-gray-400 shrink-0">${vo.date}</span>
+        `;
+          containerEl.appendChild(row);
+        }
+      });
+    }
+
+    function setActiveTab(tabName) {
+      document.querySelectorAll('.modal-tab-btn').forEach((btn) => {
+        const isActive = btn.getAttribute('data-tab') === tabName;
+        btn.classList.toggle('border-ink', isActive);
+        btn.classList.toggle('text-ink', isActive);
+        btn.classList.toggle('border-transparent', !isActive);
+        btn.classList.toggle('text-gray-400', !isActive);
+        btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+      document.querySelectorAll('.modal-tab-panel').forEach((panel) => {
+        panel.classList.toggle('hidden', panel.getAttribute('data-tab-panel') !== tabName);
+      });
+    }
+
+    document.querySelectorAll('.modal-tab-btn').forEach((btn) => {
+      btn.addEventListener('click', () => setActiveTab(btn.getAttribute('data-tab')));
+    });
+
+    let lastFocusedElement = null;
+
+    function openModal(projectId) {
+      const data = PROJECTS[projectId];
+      if (!data) return;
+
+      lastFocusedElement = document.activeElement;
+
+      modalImg.src = data.image;
+      modalImg.alt = data.title + ' — project image';
+      modalCategory.textContent = data.category;
+      modalTitle.textContent = data.title;
+      modalOverview.textContent = data.overview;
+
+      modalTools.innerHTML = '';
+      data.tools.forEach((tool) => {
+        const chip = document.createElement('span');
+        chip.className =
+          'inline-flex items-center px-3 py-1.5 text-xs font-semibold rounded-full bg-gray-100 text-ink border border-gray-200';
+        chip.textContent = tool;
+        modalTools.appendChild(chip);
+      });
+
+      renderBOQ(data.boq, modalBOQBody, modalBOQTotal);
+      renderDrafts(data.drafts, modalDrafts, null);
+      renderVOLog(data.voLog, modalVOLog, false);
+      setActiveTab('visual');
+
+      projectModal.classList.remove('hidden');
+      document.body.classList.add('modal-locked');
+
+      // Force reflow so the transition plays, then trigger it
+      requestAnimationFrame(() => {
+        projectModal.classList.add('modal-open');
+      });
+
+      modalClose.focus();
+    }
+
+    function closeModal() {
+      projectModal.classList.remove('modal-open');
+      document.body.classList.remove('modal-locked');
+
+      const handleTransitionEnd = () => {
+        projectModal.classList.add('hidden');
+        modalPanel.removeEventListener('transitionend', handleTransitionEnd);
+      };
+      modalPanel.addEventListener('transitionend', handleTransitionEnd);
+
+      if (lastFocusedElement) {
+        lastFocusedElement.focus();
+      }
+    }
+
+    document.querySelectorAll('[data-project]').forEach((card) => {
+      card.addEventListener('click', () => openModal(card.getAttribute('data-project')));
+    });
+
+    // ---------- "Other Related Works" — real uploaded project documentation ----------
+    const REAL_PROJECTS = {
+      coveredCourt: {
+        title: 'Construction of Covered Court',
+        location: null,
+        drafts: [
+          { img: 'assets/covered-court-elevations-sections.jpg', label: 'Left/Right Side Elevation, Longitudinal & Cross Section' },
+          { img: 'assets/covered-court-front-rear-elevation-ramp.jpg', label: 'Front, Rear & Right Side Elevation + Ramp Details' },
+          { img: 'assets/covered-court-floor-roof-plan.jpg', label: 'Floor Plan & Roof Plan' },
+        ],
+        origTotal: 8731403.50,
+        revTotal: 8731403.50,
+        boq: [
+          { code: '803(1)a', desc: 'Structure Excavation (Common Soil)', unit: 'cu.m.', origQty: 242.70, origAmt: 80518.15, revQty: 244.05, revAmt: 80965.36, remark: 'Increase' },
+          { code: '804(2)a', desc: 'Embankment from Borrow (Common Soil)', unit: 'cu.m.', origQty: 308.00, origAmt: 195074.88, revQty: 276.78, revAmt: 175298.21, remark: 'Decrease' },
+          { code: '900(1)a', desc: 'Structural Concrete, Class A (3000psi @ 7 days)', unit: 'cu.m.', origQty: 92.56, origAmt: 813328.42, revQty: 108.13, revAmt: 950098.70, remark: 'Increase' },
+          { code: '902(1)a1', desc: 'Reinforcing Steel, Deformed, Grade 40', unit: 'kgs.', origQty: 18608.77, origAmt: 1261674.61, revQty: 18980.73, revAmt: 1286893.17, remark: 'Increase' },
+          { code: '1014(1)a2', desc: 'Prepainted Metal Sheets (Corrugated, Long Span)', unit: 'sq.m.', origQty: 995.30, origAmt: 1201615.74, revQty: 807.00, revAmt: 974283.03, remark: 'Decrease' },
+          { code: '1047(8)a', desc: 'Structural Steel (Trusses)', unit: 'kgs.', origQty: 17111.57, origAmt: 1929842.86, revQty: 14392.88, revAmt: 1623228.49, remark: 'Decrease' },
+          { code: '1047(8)b', desc: 'Structural Steel (Purlins)', unit: 'kgs.', origQty: 7454.16, origAmt: 787532.00, revQty: 6600.12, revAmt: 697302.99, remark: 'Decrease' },
+          { code: '1003(17)', desc: 'Carpentry and Joinery Works (expanded scope)', unit: 'L.S.', origQty: 1.00, origAmt: 70536.06, revQty: 1.00, revAmt: 240311.14, remark: 'Increase' },
+          { code: '1038(1)', desc: 'Reflective Insulation', unit: 'sq.m.', origQty: null, origAmt: 0, revQty: 807.00, revAmt: 199547.82, remark: 'New Item' },
+          { code: '1051(1)a', desc: 'Railing', unit: 'L.S.', origQty: null, origAmt: 0, revQty: 1.00, revAmt: 19090.51, remark: 'New Item' },
+          { code: '100(3)a2', desc: 'Individual Removal of Trees (Small, 301-500mm dia)', unit: 'each', origQty: null, origAmt: 0, revQty: 5.00, revAmt: 34784.57, remark: 'New Item' },
+        ],
+        boqNote: 'Showing key structural and roofing line items from a 29-line original contract. Full itemized breakdown is in the source Variation Order document.',
+        docs: {
+          vo: { href: 'assets/docs/VO-Covered-Court.pdf', label: 'Download Variation Order PDF' },
+          backup: { href: 'assets/docs/Backup-Computation-Covered-Court.pdf', label: 'Download Back-up Computation PDF' },
+        },
+        voLog: [
+          { vo: 'VO #01', description: 'Structural concrete (Class A) quantity increased following revised slab-on-fill and footing computation.', impactAmt: 136770.28, remark: 'Increase' },
+          { vo: 'VO #01', description: 'Carpentry and joinery works scope expanded beyond original allowance.', impactAmt: 169775.08, remark: 'Increase' },
+          { vo: 'VO #01', description: 'Reflective insulation added as a new scope item (807 sq.m.) not in the original contract.', impactAmt: 199547.82, remark: 'New Item' },
+          { vo: 'VO #01', description: 'Structural steel trusses reduced following truss design re-measurement.', impactAmt: -306614.37, remark: 'Decrease' },
+          { vo: 'VO #01', description: 'Prepainted metal roofing sheets reduced to match revised roof coverage area.', impactAmt: -227332.71, remark: 'Decrease' },
+          { vo: 'VO #01', description: 'Perimeter railing and tree removal (5 trees, 301–500mm dia) added as new scope items.', impactAmt: 19090.51 + 34784.57, remark: 'New Item' },
+        ],
+        voSummary: 'Net contract value unchanged at ₱8,731,403.50 — additive and new-scope items were offset by deductions elsewhere in the contract (cost-neutral reallocation).',
+      },
+      barangayHall: {
+        title: '2-Storey Building — Phase I',
+        location: 'Urbiztondo, Pangasinan, Philippines',
+        drafts: [
+          { img: 'assets/barangay-hall-lighting-layout.jpg', label: 'Ground & Second Floor Lighting Layout' },
+          { img: 'assets/barangay-hall-storm-drainage-septic.jpg', label: 'Storm Drainage Plan & Septic Tank Detail' },
+          { img: 'assets/barangay-hall-plumbing-isometric.jpg', label: 'Sewer & Water Line Isometric Layout' },
+        ],
+        origTotal: 4851002.29,
+        revTotal: 4851002.29,
+        boq: [
+          { code: '900(1)a', desc: 'Structural Concrete, Class A (3000psi @ 7 days)', unit: 'cu.m.', origQty: 12.96, origAmt: 116941.19, revQty: 26.68, revAmt: 240740.04, remark: 'Increase' },
+          { code: '900(1)b', desc: 'Structural Concrete, Class A (3000psi @ 14 days)', unit: 'cu.m.', origQty: 55.72, origAmt: 527356.37, revQty: 54.20, revAmt: 512970.48, remark: 'Decrease' },
+          { code: '902(1)a1', desc: 'Reinforcing Steel, Deformed, Grade 40', unit: 'kgs.', origQty: 10081.70, origAmt: 715397.43, revQty: 10580.21, revAmt: 750771.70, remark: 'Increase' },
+          { code: '1032(1)c', desc: 'Painting Works (Steel)', unit: 'm²', origQty: 4.32, origAmt: 1810.38, revQty: 278.87, revAmt: 116867.93, remark: 'Increase' },
+          { code: '1047(7)', desc: 'Structural Steel', unit: 'L.S.', origQty: 1.00, origAmt: 2301913.60, revQty: 1.00, revAmt: 1824291.00, remark: 'Decrease' },
+          { code: '1047(5)d', desc: 'Metal Structure Accessories (Steel Plates)', unit: 'kgs.', origQty: 226.08, origAmt: 29277.36, revQty: 197.82, revAmt: 25617.69, remark: 'Decrease' },
+          { code: '1047(8)b', desc: 'Structural Steel (Purlins)', unit: 'kgs.', origQty: null, origAmt: 0, revQty: 2240.45, revAmt: 249934.46, remark: 'New Item' },
+          { code: '1002(24)', desc: 'Pay Item 1002(24)', unit: 'L.S.', origQty: 1.00, origAmt: 28496.97, revQty: 0, revAmt: 0, remark: 'Deleted' },
+        ],
+        boqNote: 'Showing key structural line items from a 25-line original contract, plus Sewer Line, Storm Drainage, and Cold Water Line works. Full breakdown is in the source Variation Order document.',
+        docs: {
+          vo: { href: 'assets/docs/VO-2Storey-Building-PhaseI.pdf', label: 'Download Variation Order PDF' },
+          backup: { href: 'assets/docs/Backup-Computation-2Storey-Building-PhaseI.pdf', label: 'Download Back-up Computation PDF' },
+        },
+        voLog: [
+          { vo: 'VO #01', description: 'Structural steel (lump sum) reduced following re-measurement of purlins and truss members.', impactAmt: -477622.60, remark: 'Decrease' },
+          { vo: 'VO #01', description: 'Structural steel purlins split out and re-priced as a distinct new pay item.', impactAmt: 249934.46, remark: 'New Item' },
+          { vo: 'VO #01', description: 'Painting works (steel) scope expanded to cover full structural steel surface area.', impactAmt: 115057.54, remark: 'Increase' },
+          { vo: 'VO #01', description: 'Reinforcing steel quantity increased following revised structural take-off.', impactAmt: 35374.27, remark: 'Increase' },
+          { vo: 'VO #01', description: 'Pay Item 1002(24) removed from contract scope entirely.', impactAmt: -28496.97, remark: 'Deleted' },
+        ],
+        voSummary: 'Net contract value unchanged at ₱4,851,002.29 — cost-neutral reallocation between structural steel, painting, and reinforcing steel line items.',
+      },
+      institutional: {
+        title: 'Institutional Building — Floor & Systems Layouts',
+        location: null,
+        drafts: [
+          { img: 'assets/institutional-bldg-elevations.jpg', label: 'Front, Rear, Left & Right Side Elevations' },
+          { img: 'assets/institutional-bldg-lighting-layout.jpg', label: 'Ground & Second Floor Lighting Layout' },
+          { img: 'assets/institutional-bldg-power-layout.jpg', label: 'Ground & Second Floor Power Layout' },
+          { img: 'assets/institutional-bldg-floor-finish-plan.jpg', label: 'Ground & Second Floor — Finish Schedule (Unglazed Tiles)' },
+        ],
+        boq: null,
+        voLog: [],
+      },
+    };
+
+    const peso2 = (n) => '₱' + Math.round(n).toLocaleString('en-PH');
+
+    (function initDashboard() {
+      const select = document.getElementById('dashboardProjectSelect');
+      const boqBody = document.getElementById('dashboardBOQBody');
+      const boqOrigTotal = document.getElementById('dashboardBOQOrigTotal');
+      const boqRevTotal = document.getElementById('dashboardBOQRevTotal');
+      const boqNote = document.getElementById('dashboardBOQNote');
+      const boqLinks = document.getElementById('dashboardBOQLinks');
+      const draftsContainer = document.getElementById('dashboardDrafts');
+      const voBody = document.getElementById('dashboardVOBody');
+      const voNotes = document.getElementById('dashboardVONotes');
+
+      if (!select || !boqBody || !draftsContainer || !voBody) return;
+
+      const remarkClass = (remark) => {
+        if (remark === 'Increase' || remark === 'New Item') return 'bg-green-50 text-green-700 border-green-200';
+        if (remark === 'Decrease' || remark === 'Deleted') return 'bg-red-50 text-red-700 border-red-200';
+        return 'bg-gray-100 text-gray-600 border-gray-200';
+      };
+
+      // ---- Floor Plans & Blueprints: grouped by project, real drawings ----
+      draftsContainer.innerHTML = '';
+      Object.values(REAL_PROJECTS).forEach((project) => {
+        const group = document.createElement('div');
+        const locLine = project.location
+          ? `<span class="block text-xs text-gray-400 mt-0.5">${project.location}</span>`
+          : '';
+        group.innerHTML = `
+        <div class="flex items-baseline justify-between flex-wrap gap-2 mb-4">
+          <div>
+            <h4 class="text-base font-bold">${project.title}</h4>
+            ${locLine}
+          </div>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+      `;
+        const grid = group.querySelector('div.grid');
+        project.drafts.forEach((draft) => {
+          const card = document.createElement('a');
+          card.href = draft.img;
+          card.target = '_blank';
+          card.rel = 'noopener';
+          card.className = 'block border border-gray-200 rounded-lg overflow-hidden bg-gray-50 hover:border-ink transition-colors group';
+          card.innerHTML = `
+          <div class="aspect-[4/3] overflow-hidden bg-white">
+            <img src="${draft.img}" alt="${draft.label} — ${project.title}" class="w-full h-full object-cover object-top group-hover:scale-[1.03] transition-transform duration-500" />
+          </div>
+          <div class="px-3 py-2.5 border-t border-gray-200">
+            <span class="text-xs font-semibold leading-snug block">${draft.label}</span>
+            <span class="text-[11px] font-semibold text-accent">View Full Drawing →</span>
+          </div>
+        `;
+          grid.appendChild(card);
+        });
+        draftsContainer.appendChild(group);
+      });
+
+      // ---- Cost Estimation & BOQ: only projects with real cost data ----
+      const costProjectIds = Object.keys(REAL_PROJECTS).filter((id) => REAL_PROJECTS[id].boq);
+      select.innerHTML = '';
+      costProjectIds.forEach((id) => {
+        const option = document.createElement('option');
+        option.value = id;
+        option.textContent = REAL_PROJECTS[id].title;
+        select.appendChild(option);
+      });
+
+      const updateBOQ = () => {
+        const data = REAL_PROJECTS[select.value];
+        boqBody.innerHTML = '';
+
+        data.boq.forEach((row) => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+          <td class="px-4 py-3">
+            <span class="font-semibold">${row.desc}</span>
+            <span class="block text-[11px] text-gray-400">${row.code}</span>
+          </td>
+          <td class="px-4 py-3 text-gray-500">${row.unit}</td>
+          <td class="px-4 py-3 text-right">${row.origQty !== null ? row.origQty.toLocaleString('en-PH') : '—'}</td>
+          <td class="px-4 py-3 text-right">${row.origAmt ? peso2(row.origAmt) : '—'}</td>
+          <td class="px-4 py-3 text-right">${row.revQty ? row.revQty.toLocaleString('en-PH') : '—'}</td>
+          <td class="px-4 py-3 text-right font-semibold">${row.revAmt ? peso2(row.revAmt) : '—'}</td>
+          <td class="px-4 py-3">
+            <span class="text-[11px] font-semibold px-2.5 py-1 rounded-full border ${remarkClass(row.remark)}">${row.remark}</span>
+          </td>
+        `;
+          boqBody.appendChild(tr);
+        });
+
+        boqOrigTotal.textContent = peso2(data.origTotal);
+        boqRevTotal.textContent = peso2(data.revTotal);
+        boqNote.textContent = data.boqNote;
+
+        boqLinks.innerHTML = '';
+        if (data.docs) {
+          [data.docs.vo, data.docs.backup].forEach((doc) => {
+            const link = document.createElement('a');
+            link.href = doc.href;
+            link.target = '_blank';
+            link.rel = 'noopener';
+            link.className = 'inline-flex items-center gap-2 px-4 py-2 text-xs font-bold border border-gray-300 rounded-md hover:bg-ink hover:text-white hover:border-ink transition-colors';
+            link.textContent = doc.label;
+            boqLinks.appendChild(link);
+          });
+        }
+      };
+
+      select.addEventListener('change', updateBOQ);
+      updateBOQ();
+
+      // ---- Variation Order Log: real entries, flattened across both costed projects ----
+      voBody.innerHTML = '';
+      costProjectIds.forEach((id) => {
+        const data = REAL_PROJECTS[id];
+        data.voLog.forEach((vo) => {
+          const tr = document.createElement('tr');
+          const impactLabel = (vo.impactAmt >= 0 ? '+' : '−') + peso2(Math.abs(vo.impactAmt));
+          tr.innerHTML = `
+          <td class="px-4 py-3 font-semibold">${data.title}</td>
+          <td class="px-4 py-3 text-xs font-bold text-ink">${vo.vo}</td>
+          <td class="px-4 py-3 text-gray-600">${vo.description}</td>
+          <td class="px-4 py-3 text-right font-semibold text-accent">${impactLabel}</td>
+          <td class="px-4 py-3"><span class="text-[11px] font-semibold px-2.5 py-1 rounded-full border ${remarkClass(vo.remark)}">${vo.remark}</span></td>
+        `;
+          voBody.appendChild(tr);
+        });
+      });
+
+      voNotes.innerHTML = '';
+      costProjectIds.forEach((id) => {
+        const data = REAL_PROJECTS[id];
+        const p = document.createElement('p');
+        p.className = 'text-xs text-gray-500';
+        p.innerHTML = `<span class="font-semibold text-ink">${data.title}:</span> ${data.voSummary}`;
+        voNotes.appendChild(p);
+      });
+    })();
+
+
+    modalClose.addEventListener('click', closeModal);
+    modalOverlay.addEventListener('click', closeModal);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && projectModal.classList.contains('modal-open')) {
+        closeModal();
+      }
+    });
+  </script>
+
+</body>
+
+</html>
