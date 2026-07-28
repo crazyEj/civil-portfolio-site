@@ -604,8 +604,7 @@
       </p>
     </div>
 
-    <form class="space-y-5"
-      onsubmit="event.preventDefault(); alert('This is a template — connect this form to a service like Formspree or your own backend to receive messages.');">
+    <form class="space-y-5" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
       <div>
         <label for="name" class="block text-sm font-semibold mb-2">Name</label>
         <input id="name" name="name" type="text" required
